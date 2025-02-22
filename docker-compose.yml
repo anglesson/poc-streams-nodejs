@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  node:
+    build: .
+    container_name: node_app
+    depends_on:
+      - mysql
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["node", "insert.js"]
+
+volumes:
+  mysql_data:
