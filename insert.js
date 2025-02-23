@@ -4,7 +4,7 @@ async function insertRecords() {
   let totalRecords = 400000;
   console.log(`Iniciando inserção de ${totalRecords} registros...`);
 
-  const batchSize = 10000; // você pode ajustar esse valor para balancear desempenho e uso de memória
+  const batchSize = 1000; // você pode ajustar esse valor para balancear desempenho e uso de memória
   let inserted = 0;
 
   try {
